@@ -1,0 +1,33 @@
+Componentes da arquitetura JavaFX
+
+- Scene Graph:
+
+	Representa a interface gráfica, com seus componentes visuais e conjunto de definições de layout.
+
+- API pública do Java
+
+	Componentes que permitem o desenvolvimento e manipulação de aplicações RIA, fornecendo liberdade e flexibilidade ao desenvolvedor.
+
+- Graphic System
+
+	Provê renderização de imagens por software, através dos pipelines principais de aceleração gráfica Prism e do Quantum Toolkit.
+
+- Glass Windowing Toolkit
+
+	Interface da plataforma JavaFX com o sistema operacional, prove funcionalidades básicas como janelas e superfícies.
+
+- Media Engines
+
+	Auxiliam na manipulação de elementos audiovisuais
+
+- Web Components
+
+	Provê integração com CSS e renderização de elementos de linguagens de marcação
+
+- JDK Libraries e JVM
+	
+	Elementos básicos da arquitetura, utilizados por todas as aplicações Java.
+
+	
+
+
