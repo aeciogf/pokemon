@@ -18,7 +18,7 @@ public class LoginApp extends Application {
 	private AnchorPane pane;
 	private TextField txLogin;
 	private PasswordField txPassword;
-	private Button btEntrar, btSair;
+	private Button btLogin, btLogout;
 	private static Stage stage;
 	
 	public void initComponents(){
@@ -31,18 +31,18 @@ public class LoginApp extends Application {
 		this.txPassword = new PasswordField();
 		this.txPassword.setPromptText("Digite sua senha");
 		
-		this.btEntrar = new Button("Entrar");
-		this.btSair = new Button("Sair");
+		this.btLogin = new Button("Entrar");
+		this.btLogout = new Button("Sair");
 		
-		this.pane.getChildren().addAll(txLogin, txPassword, btEntrar, btSair);
+		this.pane.getChildren().addAll(txLogin, txPassword, btLogin, btLogout);
 	}
 	
 	public void initLayout(){
-		this.btEntrar.setLayoutX((this.pane.getWidth() - this.btEntrar.getWidth())/2);
-		this.btEntrar.setLayoutY(150);
+		this.btLogin.setLayoutX((this.pane.getWidth() - this.btLogin.getWidth())/2);
+		this.btLogin.setLayoutY(150);
 		
-		this.btSair.setLayoutX((this.pane.getWidth() - this.btSair.getWidth())/2);
-		this.btSair.setLayoutY(200);
+		this.btLogout.setLayoutX((this.pane.getWidth() - this.btLogout.getWidth())/2);
+		this.btLogout.setLayoutY(200);
 		
 		this.txLogin.setLayoutX((this.pane.getWidth() - this.txLogin.getWidth())/2);
 		this.txLogin.setLayoutY(50);
@@ -52,14 +52,14 @@ public class LoginApp extends Application {
 	}
 	
 	public void initListeners(){
-		this.btSair.setOnAction(new EventHandler<ActionEvent>(){
+		this.btLogout.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent event){
 				fecharApp();
 			}
 		});
 		
-		this.btEntrar.setOnAction(new EventHandler<ActionEvent>(){
+		this.btLogin.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent event){
 				logarApp();
@@ -68,15 +68,21 @@ public class LoginApp extends Application {
 	}
 	
 	public void fecharApp(){
-		System.out.println("Até a próxima.");
+		System.out.println("Atï¿½ a prï¿½xima.");
 		System.exit(0);
 	}
 	
 	public void logarApp(){
 		if (txLogin.getText().equals("admin") && txPassword.getText().equals("123"))
-			System.out.println("Login realizado");
+			try {
+				new VitrineApp().start(new Stage());
+				LoginApp.getStage().close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 		else
-			JOptionPane.showMessageDialog(null, "Credenciais inválidas", "Erro", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Credenciais invï¿½lidas", "Erro", JOptionPane.ERROR_MESSAGE);
 	}
 	
 	@Override
