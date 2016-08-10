@@ -5,29 +5,29 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class ItemsProperty {
 
-	private SimpleStringProperty nome;
-	private SimpleDoubleProperty forca;
+	private SimpleStringProperty name;
+	private SimpleDoubleProperty strenght;
 	
 	public ItemsProperty(String nome, double forca){
-		this.nome = new SimpleStringProperty(nome);
-		this.forca = new SimpleDoubleProperty(forca);
+		this.name = new SimpleStringProperty(nome);
+		this.strenght = new SimpleDoubleProperty(forca);
 		
 	}
 
-	public String getNome() {
-		return this.nome.get();
+	public String getName() {
+		return this.name.get();
 	}
 
-	public void setNome(String nome) {
-		this.nome.set(nome);
+	public void setName(String nome) {
+		this.name.set(nome);
 	}
 
-	public double getForca() {
-		return this.forca.get();
+	public double getStrenght() {
+		return this.strenght.get();
 	}
 
-	public void setForca(double forca) {
-		this.forca.set(forca);
+	public void setStrenght(double forca) {
+		this.strenght.set(forca);
 	}
 	
 }

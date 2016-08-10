@@ -42,14 +42,14 @@ public class VitrineApp extends Application {
 		this.txSearch = new TextField();
 		this.txSearch.setPromptText("Busca por");
 		this.tbVitrine = new TableView<ItemsProperty>();
-		this.tbVitrine.setPrefSize(780, 550);
+		this.tbVitrine.setPrefSize(600, 550);
 		
 		this.columnItem = new TableColumn<ItemsProperty, String>("Pokemon");
-		this.columnItem.setCellValueFactory(new PropertyValueFactory<ItemsProperty, String>("Nome"));
+		this.columnItem.setCellValueFactory(new PropertyValueFactory<ItemsProperty, String>("Name"));
 		
 		
-		this.columnPrize = new TableColumn<ItemsProperty, Double>("Força");
-		this.columnPrize.setCellValueFactory(new PropertyValueFactory<ItemsProperty, Double>("Força"));
+		this.columnPrize = new TableColumn<ItemsProperty, Double>("Forca");
+		this.columnPrize.setCellValueFactory(new PropertyValueFactory<ItemsProperty, Double>("Strenght"));
 		
 		this.tbVitrine.getColumns().addAll(columnItem, columnPrize);
 		
@@ -77,7 +77,7 @@ public class VitrineApp extends Application {
 	private ObservableList<ItemsProperty> findItems(){
 		ObservableList<ItemsProperty> foundItems = FXCollections.observableArrayList();
 		for (ItemsProperty items: this.listItems)
-			if (items.getNome().contains(this.txSearch.getText()))
+			if (items.getName().contains(this.txSearch.getText()))
 				foundItems.add(items);
 		return foundItems;
 	}

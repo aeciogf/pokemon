@@ -1,19 +1,19 @@
 package model;
 
 public class Pokemon {
-	private String nome;
-	private double forca;
+	private String name;
+	private double strength;
 	
 	public Pokemon(String nome, double forca){
-		this.nome = nome;
-		this.forca = forca; 
+		this.name = nome;
+		this.strength = forca; 
 	}
 
-	public String getNome(){
-		return this.nome;
+	public String getName(){
+		return this.name;
 	}
 	
-	public double getForca(){
-		return this.forca;
+	public double getStrength(){
+		return this.strength;
 	}
 }
