@@ -55,24 +55,24 @@ public class LoginApp extends Application {
 		this.btLogout.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent event){
-				fecharApp();
+				logoutApp();
 			}
 		});
 		
 		this.btLogin.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent event){
-				logarApp();
+				loginApp();
 			}
 		});
 	}
 	
-	public void fecharApp(){
-		System.out.println("At� a pr�xima.");
+	public void logoutApp(){
+		System.out.println("Até a próxima.");
 		System.exit(0);
 	}
 	
-	public void logarApp(){
+	public void loginApp(){
 		if (txLogin.getText().equals("admin") && txPassword.getText().equals("123"))
 			try {
 				new VitrineApp().start(new Stage());
@@ -82,9 +82,13 @@ public class LoginApp extends Application {
 			}
 			
 		else
-			JOptionPane.showMessageDialog(null, "Credenciais inv�lidas", "Erro", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Credenciais inválidas", "Erro", JOptionPane.ERROR_MESSAGE);
 	}
 	
+	private static Stage getStage() {
+		return stage;
+	}
+
 	@Override
 	public void start(Stage stage) {
 		try {

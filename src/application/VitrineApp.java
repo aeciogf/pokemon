@@ -2,37 +2,96 @@ package application;
 
 import javax.swing.JOptionPane;
 
+import controller.Cart;
+import controller.Vitrine;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.Pokemon;
 
 public class VitrineApp extends Application {
 	
-	
+	private AnchorPane pane;
+	private TextField txSearch;
+	private TableView<ItemsProperty> tbVitrine;
+	private TableColumn<ItemsProperty, String> columnItem;
+	private TableColumn<ItemsProperty, Double> columnPrize;
+	private static ObservableList<ItemsProperty> listItems = FXCollections.observableArrayList();
+	private static Cart cart;
 	private static Stage stage;
-	private Parent pane;
+
 
 	public void initComponents(){
+		this.pane = new AnchorPane();
+		this.pane.setPrefSize(800, 600);
+		this.pane.setStyle("-fx-background-color: linear-gradient(from 0% 0% to 100%"
+							+ " 100%, silver 0%, silver 100%)");
 		
+		this.txSearch = new TextField();
+		this.txSearch.setPromptText("Busca por");
+		this.tbVitrine = new TableView<ItemsProperty>();
+		this.tbVitrine.setPrefSize(780, 550);
+		
+		this.columnItem = new TableColumn<ItemsProperty, String>("Pokemon");
+		this.columnItem.setCellValueFactory(new PropertyValueFactory<ItemsProperty, String>("Nome"));
+		
+		
+		this.columnPrize = new TableColumn<ItemsProperty, Double>("Força");
+		this.columnPrize.setCellValueFactory(new PropertyValueFactory<ItemsProperty, Double>("Força"));
+		
+		this.tbVitrine.getColumns().addAll(columnItem, columnPrize);
+		
+		this.pane.getChildren().addAll(txSearch, tbVitrine);
+		
+		this.cart = new Cart();
+		
+		initItems();
 	}
 	
-	public void initLayout(){
+	public void initItems(){
+		Vitrine vitrine = new Vitrine();
+		vitrine.addToCart(new Pokemon("Pikachu", 12.00), 
+						  new Pokemon("Charmander", 19.00),
+						  new Pokemon("Zubat", 9.00),
+						  new Pokemon("Ratata", 11.00),
+						  new Pokemon("Pidgey", 10.00));
+		
+		for (Pokemon p: vitrine.getFromCart())
+			listItems.add(new ItemsProperty(p.getName(), p.getStrength()));
+		
+		this.tbVitrine.setItems(listItems);
+	}
+	
+	private ObservableList<ItemsProperty> findItems(){
+		ObservableList<ItemsProperty> foundItems = FXCollections.observableArrayList();
+		for (ItemsProperty items: this.listItems)
+			if (items.getNome().contains(this.txSearch.getText()))
+				foundItems.add(items);
+		return foundItems;
 	}
 	
 	public void initListeners(){
-	}
-	
-	public void fecharApp(){
-	}
-	
-	public void logarApp(){
+		this.txSearch.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle (ActionEvent event){
+				if (!txSearch.getText().equals(""))
+					tbVitrine.setItems(findItems());
+				else 
+					tbVitrine.setItems(listItems);
+			}
+		});
 	}
 	
 	@Override
@@ -45,7 +104,7 @@ public class VitrineApp extends Application {
 			stage.setResizable(false);
 			stage.setTitle("Login");
 			stage.show();
-			initLayout();
+			// initLayout();
 			VitrineApp.stage = stage;
 			
 		} catch(Exception e) {
