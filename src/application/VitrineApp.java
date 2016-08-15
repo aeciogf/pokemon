@@ -17,6 +17,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Pokemon;
@@ -25,10 +26,10 @@ public class VitrineApp extends Application {
 	
 	private AnchorPane pane;
 	private TextField txSearch;
-	private TableView<ItemsProperty> tbVitrine;
-	private TableColumn<ItemsProperty, String> columnItem;
-	private TableColumn<ItemsProperty, Double> columnPrize;
-	private static ObservableList<ItemsProperty> listItems = FXCollections.observableArrayList();
+	private TableView<Pokemon> tbVitrine;
+	private TableColumn<Pokemon, String> columnItem;
+	private TableColumn<Pokemon, Double> columnPrize;
+	private static ObservableList<Pokemon> listItems = FXCollections.observableArrayList();
 	private static Cart cart;
 	private static Stage stage;
 
@@ -41,15 +42,15 @@ public class VitrineApp extends Application {
 		
 		this.txSearch = new TextField();
 		this.txSearch.setPromptText("Busca por");
-		this.tbVitrine = new TableView<ItemsProperty>();
-		this.tbVitrine.setPrefSize(600, 550);
+		this.tbVitrine = new TableView<Pokemon>();
+		this.tbVitrine.setPrefSize(550, 550);
 		
-		this.columnItem = new TableColumn<ItemsProperty, String>("Pokemon");
-		this.columnItem.setCellValueFactory(new PropertyValueFactory<ItemsProperty, String>("Name"));
+		this.columnItem = new TableColumn<Pokemon, String>("Pokemon");
+		this.columnItem.setCellValueFactory(new PropertyValueFactory<Pokemon, String>("Name"));
 		
 		
-		this.columnPrize = new TableColumn<ItemsProperty, Double>("Forca");
-		this.columnPrize.setCellValueFactory(new PropertyValueFactory<ItemsProperty, Double>("Strenght"));
+		this.columnPrize = new TableColumn<Pokemon, Double>("Forca");
+		this.columnPrize.setCellValueFactory(new PropertyValueFactory<Pokemon, Double>("Strenght"));
 		
 		this.tbVitrine.getColumns().addAll(columnItem, columnPrize);
 		
@@ -69,14 +70,27 @@ public class VitrineApp extends Application {
 						  new Pokemon("Pidgey", 10.00));
 		
 		for (Pokemon p: vitrine.getFromCart())
-			listItems.add(new ItemsProperty(p.getName(), p.getStrength()));
+			listItems.add(new Pokemon(p.getName(), p.getStrength()));
 		
 		this.tbVitrine.setItems(listItems);
 	}
 	
-	private ObservableList<ItemsProperty> findItems(){
-		ObservableList<ItemsProperty> foundItems = FXCollections.observableArrayList();
-		for (ItemsProperty items: this.listItems)
+	public void initLayout(){
+		this.txSearch.setLayoutX(this.pane.getWidth() - this.txSearch.getWidth() - 10);
+		this.txSearch.setLayoutY(7);
+		
+		this.tbVitrine.setLayoutY(40);
+		this.tbVitrine.setLayoutX(10);
+		
+		this.columnItem.prefWidthProperty().bind(this.tbVitrine.widthProperty().multiply(0.6));
+		
+		this.columnPrize.prefWidthProperty().bind(this.tbVitrine.widthProperty().multiply(0.4));
+
+	}
+	
+	private ObservableList<Pokemon> findItems(){
+		ObservableList<Pokemon> foundItems = FXCollections.observableArrayList();
+		for (Pokemon items: this.listItems)
 			if (items.getName().contains(this.txSearch.getText()))
 				foundItems.add(items);
 		return foundItems;
@@ -91,6 +105,28 @@ public class VitrineApp extends Application {
 				else 
 					tbVitrine.setItems(listItems);
 			}
+		});
+		
+		this.tbVitrine.setOnMousePressed(new EventHandler<MouseEvent>(){
+
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.isPrimaryButtonDown() && event.getClickCount() == 2){
+					//pesquisar no banco de dados
+					int indexSelectPokemon = tbVitrine.getSelectionModel().getSelectedIndex();
+					ItemVitrineApp.setPokemon(listItems.get(indexSelectPokemon));
+					ItemVitrineApp.setIndex(indexSelectPokemon);
+					try {
+						new ItemVitrineApp().start(new Stage());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				
+				}
+					
+				
+			}
+			
 		});
 	}
 	
