@@ -50,7 +50,7 @@ public class VitrineApp extends Application {
 		
 		
 		this.columnPrize = new TableColumn<Pokemon, Double>("Forca");
-		this.columnPrize.setCellValueFactory(new PropertyValueFactory<Pokemon, Double>("Strenght"));
+		this.columnPrize.setCellValueFactory(new PropertyValueFactory<Pokemon, Double>("Strength"));
 		
 		this.tbVitrine.getColumns().addAll(columnItem, columnPrize);
 		
@@ -138,9 +138,9 @@ public class VitrineApp extends Application {
 			Scene scene = new Scene(pane);
 			stage.setScene(scene);
 			stage.setResizable(false);
-			stage.setTitle("Login");
+			stage.setTitle("Vitrine");
 			stage.show();
-			// initLayout();
+			initLayout();
 			VitrineApp.stage = stage;
 			
 		} catch(Exception e) {

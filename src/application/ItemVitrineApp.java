@@ -55,7 +55,7 @@ public class ItemVitrineApp extends Application {
 		
 		this.imgItem = new ImageView(imgPokemons[index]);
 		
-		this.lbStrengh = new Label("ForÃ§a: " + pokemon.getStrength());
+		this.lbStrengh = new Label("Força: " + pokemon.getStrength());
 		this.lbName = new Label("Nome: " + pokemon.getName());
 		
 		this.btAddToCart = new Button("Add ao carrinho");
